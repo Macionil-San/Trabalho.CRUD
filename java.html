@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Ruan macionil">
+    <title>Crud-RMS</title>
+</head>
+
+<body>
+    <script>
+
+    let arrUsers = [];
+    let loopBreak = true;
+
+    function showMenu() {
+        return parseInt(prompt(
+            `
+            [1] -> Cadastrar usuário
+            [2] -> Visualizar usuários
+            [3] -> Atualizar usuário
+            [4] -> Deletar usuário
+            [5] -> Sair do programa
+            `
+        ));
+    }
+
+    function addUser() {
+        const nome = prompt("Informe o nome do usuário: ");
+        const numero = prompt("Informe o número do usuário: ");
+        const email = prompt("Informe o email do usuário: ");
+      
+        const dataHora = new Date().toLocaleString();
+        
+        if (nome === "" || numero === "" || email === "") {
+            alert("Nome, número e email são obrigatórios!");
+           
+            return;
+        }
+
+        
+        const usuario = { nome: nome, numero: numero, email: email, dataHora: dataHora };
+    
+        arrUsers.push(usuario);
+        console.log(arrUsers);
+        alert("Usuário cadastrado com sucesso!");
+    }
+// __________________________________________LIST USER_______________________________________________________________________________________
+
+    function listUsers() {
+        let listUser = "";
+        arrUsers.forEach((usuario) => {
+            listUser += `\nNome: ${usuario.nome}, Número: ${usuario.numero}, Email: ${usuario.email}, feito em: ${usuario.dataHora}`;
+        });
+        alert("Lista de usuários cadastrados:\n" + listUser);
+    }
+// ________________________________UPDATE____________________________________________________________________________________________________________
+    
+    function updateUser() {
+     const findEmail = prompt("Informe o email do usuário que deseja atualizar: ");
+     const usuarioEncontrado = arrUsers.find(user => user.email === findEmail);
+
+        if (!usuarioEncontrado) {
+            alert("Usuário não encontrado!");
+            return;
+        }
+
+    
+    const novoNome = prompt("Insira o novo nome: ");
+     const novoNumero = prompt("Insira o novo número: ");
+    const novoEmail = prompt("Insira o novo email: ");
+
+        if (novoNome) {
+            usuarioEncontrado.nome = novoNome;
+            
+        }
+
+        if (novoNumero) {
+            usuarioEncontrado.numero = novoNumero;
+        }
+
+        if (novoEmail) {
+            usuarioEncontrado.email = novoEmail;
+        }
+
+        alert("Usuário atualizado com sucesso!");
+    }
+// _________________________________________________________DELETE USER____________________________________________________________________________
+
+             function deleteUser() {
+        const findEmail = prompt("Informe o email do usuário que deseja excluir: ");
+//encontra usuário na lista arrUsers que tem o email para delete.
+        const indexToDelete = arrUsers.findIndex(user => user.email === findEmail);
+
+        if (indexToDelete === -1) {
+            alert("Usuário não encontrado!");
+            return;
+        }
+
+        arrUsers.splice(indexToDelete, 1);
+        alert("Usuário excluído com sucesso!");
+    }
+
+    // __________________________________________________________CASES________________________________________________________________________________________
+  
+      while (loopBreak) {
+        switch (showMenu()) {
+            case 1:
+                addUser();
+                break;
+            case 2:
+                listUsers();
+                break;
+            case 3:
+                updateUser();
+                break;
+            case 4:
+                deleteUser();
+                break;
+            case 5:
+                alert("Você está saindo. Até logo!");
+                loopBreak = false;
+                break;
+            default:
+                alert("Opção inválida!");
+                break;
+        }
+    }
+
+
+      </script>
+   </body>
+</html>
